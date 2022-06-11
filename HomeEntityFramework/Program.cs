@@ -17,7 +17,7 @@ namespace HomeEntityFramework
             using (var db = new AppContext())
             {
                 var userRepository= new UserRepository(db);
-
+                var bookRepos = new BookRepository(db);
                 var user1 = new User { Name = "Arthur", Email = "Admin" };
                 var user2 = new User { Name = "klim", Email = "User" };
                 var user3 = new User { Name = "Apolo", Email = "Kurt" };
@@ -41,9 +41,17 @@ namespace HomeEntityFramework
                 db.Users.AddRange(user1,user2, user3, user4);
                 //получение книги при создании книги и закреплением за ним.
                 /* book3.User = user3;
-                 book4.User = user4;
- */
+                 book4.User = user4;*/
 
+                Console.WriteLine("Получим список книг");
+                var allbooks = bookRepos.SelectAllBooks();
+                foreach(Book bokk in allbooks)
+                {
+                    Console.WriteLine(bokk);
+                }
+                Console.WriteLine("Введите ид книги");
+                int idb = Convert.ToInt32(Console.ReadLine());
+                userRepository.SelectById(idb);
                 /*db.Users.Add(user1);
                 db.Users.AddRange(user2, user3, user4);
                */

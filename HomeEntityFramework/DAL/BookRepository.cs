@@ -20,7 +20,7 @@ namespace HomeEntityFramework.DAL
             var bookId = db.Books.Find(id);
             return bookId;
         }
-        public List<Book> SelectAllUser()
+        public List<Book> SelectAllBooks()
         {
             var allUsersd = db.Books.ToList();
             return allUsersd;
