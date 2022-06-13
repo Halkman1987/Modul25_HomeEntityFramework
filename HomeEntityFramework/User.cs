@@ -12,6 +12,6 @@ namespace HomeEntityFramework
         public string Name { get; set; }
         public string Email { get; set; }
 
-        public List<Book> Books => new List<Book>();
+        public List<Book> Books = new List<Book>();
     }
 }

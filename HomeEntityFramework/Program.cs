@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,9 +30,6 @@ namespace HomeEntityFramework
                 var book4 = new Book { BookName = "4", Autor = "4", Klass = "4", CreateDate = 1994 };
 
 
-                
-                
-
                 //Получение книги через юзера
                 user1.Books.Add(book1);
                 user2.Books.Add(book2);
@@ -40,8 +38,7 @@ namespace HomeEntityFramework
                 db.Books.AddRange(book1, book2, book3, book4);
                 db.Users.AddRange(user1,user2, user3, user4);
                 //получение книги при создании книги и закреплением за ним.
-                /* book3.User = user3;
-                 book4.User = user4;*/
+               
 
                 Console.WriteLine("Получим список книг");
                 var allbooks = bookRepos.SelectAllBooks();
@@ -51,10 +48,29 @@ namespace HomeEntityFramework
                 }
                 Console.WriteLine("Введите ид книги");
                 int idb = Convert.ToInt32(Console.ReadLine());
-                userRepository.SelectById(idb);
-                /*db.Users.Add(user1);
-                db.Users.AddRange(user2, user3, user4);
-               */
+                var findByidbook = userRepository.SelectById(idb);
+                foreach (Book bokk in allbooks)
+                {
+                    Console.WriteLine(bokk);
+                }
+
+                //проба вывести в таблице книги
+                foreach (DataColumn column in allbooks)
+                {
+                    Console.Write($"{column.ColumnName}\t");
+                }
+                Console.WriteLine();
+                
+                foreach (DataRow row in allbooks)
+                {
+                    var cells = row.ItemArray;
+                    foreach (var cell in cells)
+                    {
+                        Console.Write($"{cell}\t");
+                    }
+                    Console.WriteLine();
+                }
+                
                 db.SaveChanges();
 
                 //Альтернативный способ удаления из БД записи.
@@ -73,25 +89,12 @@ namespace HomeEntityFramework
                 //db.SaveChanges();
 
 
-                /* Для каждой из моделей в приложении создайте собственный класс - репозиторий(например, UserRepository и BookRepository),
-                *  в которых опишите следующие действия: 
-                *  1 выбор объекта из БД по его идентификатору, 
-                *  2 выбор всех объектов,
-                *  3 добавление объекта в БД и
-                *  4 его удаление из БД.
-                *     А также специфичные методы: 
-                *      обновление имени пользователя(по Id) и 
-                *      обновление года выпуска книги(по Id).
-                
-                Пришло время расширить проект и добавить в него некоторые новые части. 
-                Реализуйте с помощью одной из связей возможность получения книги «на руки» пользователем 
-                (для этого придется удалить таблицы из БД, либо воспользоваться EnsureDeleted). 
-                А также придумайте, как можно добавить в книгу автора и жанр книги.
+          
                 
 
 
 
-                 С помощью полученных знаний дополните репозитории методами, которые позволят совершать следующие действия:
+               /*  С помощью полученных знаний дополните репозитории методами, которые позволят совершать следующие действия:
 
                  Получать список книг определенного жанра и вышедших между определенными годами.
                  Получать количество книг определенного автора в библиотеке.
